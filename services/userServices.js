@@ -1,7 +1,7 @@
 import client from '../config/client.js'
 export const findUserByEmail = async (email) => {
     try {
-        const user = await client.user.findFirst({ where: { email } });
+        const user = await client.users.findFirst({ where: { email } });
         if (!user) return false
 
         return user
@@ -12,7 +12,7 @@ export const findUserByEmail = async (email) => {
 
 export const findUserById = async (id) => {
     try {
-        const user = await client.user.findFirst({ where: { id: parseInt(id) } })
+        const user = await client.users.findFirst({ where: { id: parseInt(id) } })
         if (!user) return false
         return user
     } catch (error) {

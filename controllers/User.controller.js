@@ -11,10 +11,10 @@ export const createUser = expressAsyncHandler(async (req, res, next) => {
     if (error) return next(new Error(error.details[0].message))
 
     const userExists = await findUserByEmail(value.email)
-    if(userExists) return next(new Error("user already registered"))
+    if (userExists) return next(new Error("user already registered"))
 
     const hashedPwd = await bcrypt.hash(password, 10)
-    const newUser = await client.user.create({
+    const newUser = await client.users.create({
         data: {
             email: value.email,
             name: value.name,
