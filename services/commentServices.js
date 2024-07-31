@@ -3,7 +3,9 @@ import client from '../config/client.js'
 
 export const createComment = async (comment) => {
     const newComment = await client.comments.create({
-        data: { ...comment }
+        data: {
+            ...comment
+        }
     })
 
     if (!newComment.id) return false
