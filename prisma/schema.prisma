@@ -13,33 +13,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
-  id      String   @id @default(cuid())
-  email   String @db.VarChar(155)
+model Users {
+  id       String    @id @default(cuid())
+  email    String    @db.VarChar(155) @unique
   password String?
-  name    String?
+  name     String?
 
-  Post Posts[]
-
-  Comment Comments[]
+  posts    Posts[]   @relation("UserPosts")
+  comments Comments[] @relation("UserComments")
 }
 
 model Posts {
-  id       String   @id @default(cuid())
-  title    String   @db.VarChar(255)
-  content  String?
-  author   Users     @relation(fields: [authorId], references: [id])
-  authorId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  comments Comments[]
+  id        String    @id @default(cuid())
+  title     String    @db.VarChar(255)
+  content   String?
+  author    Users     @relation(fields: [authorId], references: [id], name: "UserPosts")
+  authorId  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comments  Comments[] @relation("PostComments")
 }
 
 model Comments {
-  id       String   @id @default(cuid())
-  author   Users     @relation(fields: [authorId], references: [id])
-  authorId String
-  content  String?
-  post     Posts     @relation(fields: [postId], references: [id])
-  postId   String
+  id        String    @id @default(cuid())
+  author    Users     @relation(fields: [authorId], references: [id], name: "UserComments")
+  authorId  String
+  content   String?
+  post      Posts     @relation(fields: [postId], references: [id], name: "PostComments")
+  postId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

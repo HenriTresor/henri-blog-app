@@ -13,11 +13,11 @@ export const createNewPost = async (post) => {
 }
 
 export const getAllPosts = async () => {
-    return client.posts.findMany();
+    return client.posts.findMany({ include: { author } });
 }
 
 export const findPostById = async (postId) => {
-    return client.posts.findUnique({ where: { id: postId } })
+    return client.posts.findUnique({ where: { id: postId }, include: { author, comments } })
 }
 
 export const updatePostById = async (postId, data) => {

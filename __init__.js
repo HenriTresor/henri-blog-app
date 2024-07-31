@@ -7,6 +7,7 @@ import http from 'http'
 import userRouter from './routers/user.route.js'
 import authRouter from './routers/auth.route.js'
 import postRouter from './routers/post.route.js'
+import commentRouter from './routers/comment.route.js'
 
 config()
 
@@ -26,6 +27,7 @@ const root = '/api/v1/'
 app.use(`${root}users`, userRouter)
 app.use(`${root}auth`, authRouter)
 app.use(`${root}posts`, postRouter)
+app.use(`${root}comments`, commentRouter)
 app.all('*', (req, res, next) => {
     next(new Error('route not found'))
 })
