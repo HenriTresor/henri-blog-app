@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Users{
-  id      Int   @id @default(autoincrement())
+  id      String   @id @default(cuid())
   email   String @db.VarChar(155)
   password String?
   name    String?
@@ -29,7 +29,7 @@ model Posts {
   title    String   @db.VarChar(255)
   content  String?
   author   Users     @relation(fields: [authorId], references: [id])
-  authorId Int
+  authorId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   comments Comments[]
@@ -38,7 +38,7 @@ model Posts {
 model Comments {
   id       String   @id @default(cuid())
   author   Users     @relation(fields: [authorId], references: [id])
-  authorId Int
+  authorId String
   content  String?
   post     Posts     @relation(fields: [postId], references: [id])
   postId   String

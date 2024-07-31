@@ -12,12 +12,20 @@ export const createNewPost = async (post) => {
     return newPost
 }
 
+export const getAllPosts = async () => {
+    return client.posts.findMany();
+}
+
 export const findPostById = async (postId) => {
-    return client.posts.findFirst({ where:{id:postId} })
+    return client.posts.findUnique({ where: { id: postId } })
+}
+
+export const updatePostById = async (postId, data) => {
+    return client.posts.update({ where: { id: postId }, ...data })
 }
 
 export const deletePostById = async (postId) => {
 
-    return await client.posts.delete({where:{id: postId}})
+    return await client.posts.delete({ where: { id: postId } })
 
 }
