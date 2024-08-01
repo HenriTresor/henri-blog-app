@@ -25,14 +25,14 @@ function Post({ author, content, createdAt, title, numberOfComments, id, authorI
                 {
                     authorId === user?.id ? (
                         <p>owner</p>
-                    ): null
+                    ) : null
                 }
             </div>
-            <p className="text-[1rem] p-5">{content}</p>
+            <p className="text-[1rem] p-5">{content && content?.length > 100 ? <> {content.slice(0,200)} <span className="text-blue-700"> ... read more</span></> : content}</p>
             <div className="flex items-center gap-5">
-                <p className="flex items-center gap-2"><PersonStanding/> <span className="font-bold">{author?.name}</span></p>
-                <p className="flex items-center gap-2"><Timer/> <span className="font-bold">{new Date(createdAt).toLocaleDateString()}</span></p>
-                <p className="flex items-center gap-2"><MessageCircle/> <span className="font-bold">{numberOfComments}</span></p>
+                <p className="flex items-center gap-2"><PersonStanding /> <span className="font-bold">{author?.name}</span></p>
+                <p className="flex items-center gap-2"><Timer /> <span className="font-bold">{new Date(createdAt).toLocaleDateString()}</span></p>
+                <p className="flex items-center gap-2"><MessageCircle /> <span className="font-bold">{numberOfComments}</span></p>
             </div>
         </div>
     )
