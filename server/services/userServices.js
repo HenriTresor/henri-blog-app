@@ -12,7 +12,7 @@ export const findUserByEmail = async (email) => {
 
 export const findUserById = async (id) => {
     try {
-        const user = await client.users.findFirst({ where: { id: parseInt(id) } })
+        const user = await client.users.findFirst({ where: { id:id } })
         if (!user) return false
         return user
     } catch (error) {

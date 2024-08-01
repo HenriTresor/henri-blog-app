@@ -2,6 +2,7 @@ import expressAsyncHandler from 'express-async-handler'
 import client from '../config/client.js'
 import commentValidObject from '../validators/Comment.joi.js'
 import { createComment, deleteOneCommentById, retrieveOneComment, retrievePostComments, updateCommentById } from '../services/commentServices.js'
+import { findUserById } from '../services/userServices.js'
 
 export const addComment = expressAsyncHandler(async (req, res, next) => {
     let { postId, authorId, content } = req.body
@@ -12,10 +13,12 @@ export const addComment = expressAsyncHandler(async (req, res, next) => {
     const newComment = await createComment({ postId, authorId, content })
     if (!newComment) return next(new Error("comment not saved"))
 
+    let author = await findUserById(authorId)
+    console.log(author)
     res.status(201).json({
         status: true,
         message: 'comment saved',
-        comment: newComment
+        comment: { ...newComment, author }
     })
 })
 

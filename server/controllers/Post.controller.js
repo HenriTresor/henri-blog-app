@@ -23,7 +23,7 @@ export const deletePost = expressAsyncHandler(async (req, res, next) => {
     const postExists = await findPostById(postId)
     console.log(postExists)
     if (!postExists) return next(new Error("post does not exists"))
-    await deletePostById(postId)
+        await deletePostById(postId)
     res.status(200).json({
         status: true,
         message: "post deleted successfully"
@@ -33,7 +33,6 @@ export const deletePost = expressAsyncHandler(async (req, res, next) => {
 export const getOnePost = expressAsyncHandler(async (req, res, next) => {
     let { postId } = req.params
     const postExists = await findPostById(postId)
-    console.log(postExists)
     if (!postExists) return next(new Error("post does not exists"))
     res.status(200).json({
         status: true,

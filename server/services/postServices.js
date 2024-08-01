@@ -75,10 +75,12 @@ export const findPostById = async (postId) => {
 
     const comments = await fetchComments(postId);
     const commentsWithAuthors = await fetchCommentAuthors(comments);
+    const author = await fetchAuthor(post.authorId)
 
     return {
         ...post,
-        comments: commentsWithAuthors
+        comments: commentsWithAuthors,
+        author
     };
 }
 
@@ -87,7 +89,16 @@ export const updatePostById = async (postId, data) => {
 }
 
 export const deletePostById = async (postId) => {
+    return await client.$transaction(async (prisma) => {
+        // Delete all comments associated with the post
+        await client.comments.deleteMany({
+            where: { postId: postId }
+        });
 
-    return await client.posts.delete({ where: { id: postId } })
+        // Delete the post
+        await client.posts.delete({
+            where: { id: postId }
+        });
+    });
 
 }
