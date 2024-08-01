@@ -4,23 +4,23 @@ This project is a blog platform that includes user authentication, blog post man
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
-2. [Backend Setup](#backend-setup)
+2. [Project Structure](#project-structure)
+3. [Backend Setup](#backend-setup)
    - [User Authentication](#user-authentication)
    - [Blog Post Management](#blog-post-management)
    - [API Endpoints](#api-endpoints)
-3. [Frontend Setup](#frontend-setup)
+4. [Frontend Setup](#frontend-setup)
    - [Authentication](#authentication)
    - [Blog Post Management](#blog-post-management-1)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Database Setup](#database-setup)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [Contributing](#contributing)
+8. [License](#license)
+9. [Database Setup](#database-setup)
 
 ## Project Overview
 
 This project implements a blog platform where users can register, log in, manage blog posts, and interact with comments. The backend uses Node.js, Prisma, and PostgreSQL. The frontend is built with React.js.
-
 
 ## Project Structure
 
@@ -33,8 +33,8 @@ This project implements a blog platform where users can register, log in, manage
     - **`/routers`**: Defines API routes and connects them to controllers.
     - **`/middlewares`**: Contains middleware functions, such as authentication checks.
     - **`/services`**: Functions for making API requests to the database.
-    - **`/config`**: contains configuration files.
-    - **`/validators`**: contains validations.
+    - **`/config`**: Contains configuration files.
+    - **`/validators`**: Contains validations.
     - **`/utils`**: Utility functions and helpers.
   - **`/prisma`**: Contains Prisma configuration files and migration scripts.
   - **`__init__.js`**: Entry point for the backend application. Sets up the Express server and middleware.
@@ -49,7 +49,6 @@ This project implements a blog platform where users can register, log in, manage
     - **`/providers`**: Contains React context providers for state management.
     - **`/styles`**: CSS and styling files.
   - **`index.js`**: Entry point for the React application. Renders the main application component.
-
 
 ## Backend Setup
 
@@ -136,7 +135,17 @@ All endpoints have the root `/api/v1`.
      ```bash
      npm install
      ```
-   - Set up Prisma and database:
+   - Set up PostgreSQL:
+     - Connect to PostgreSQL using `psql` or a GUI tool like pgAdmin.
+     - Create a new database:
+       ```sql
+       CREATE DATABASE blog_platform;
+       ```
+     - Update the Prisma configuration (`/server/prisma/.env`) with your database connection details:
+       ```env
+       DATABASE_URL="postgresql://username:password@localhost:5432/blog_platform"
+       ```
+   - Set up Prisma and migrate the database:
      ```bash
      npx prisma migrate dev
      ```
@@ -184,6 +193,9 @@ This project is licensed under the MIT License.
 #### Create Tables
 
 ```sql
+-- Enable uuid-ossp extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Create Users table
 CREATE TABLE Users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -214,19 +226,16 @@ CREATE TABLE Comments (
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 -- Insert sample users
-INSERT INTO Users (username, password, email) VALUES
+INSERT INTO Users (name, password, email) VALUES
 ('john_doe', 'password123', 'john@example.com'),
 ('jane_smith', 'password456', 'jane@example.com');
 
 -- Insert sample posts
 INSERT INTO Posts (title, content, authorId) VALUES
-('First Post', 'This is the content of the first post.', (SELECT id FROM Users WHERE username='john_doe')),
-('Second Post', 'This is the content of the second post.', (SELECT id FROM Users WHERE username='jane_smith'));
+('First Post', 'This is the content of the first post.', (SELECT id FROM Users WHERE name='john_doe')),
+('Second Post', 'This is the content of the second post.', (SELECT id FROM Users WHERE name='jane_smith'));
 
 -- Insert sample comments
 INSERT INTO Comments (authorId, postId, content) VALUES
-((SELECT id FROM Users WHERE username='jane_smith'), (SELECT id FROM Posts WHERE title='First Post'), 'This is a comment on the first post.'),
-((SELECT id FROM Users WHERE username='john_doe'), (SELECT id FROM Posts WHERE title='Second Post'), 'This is a comment on the second post.');
-
----enable uuid-ossp
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+((SELECT id FROM Users WHERE name='jane_smith'), (SELECT id FROM Posts WHERE title='First Post'), 'This is a comment on the first post.'),
+((SELECT id FROM Users WHERE name='john_doe'), (SELECT id FROM Posts WHERE title='Second Post'), 'This is a comment on the second post.');
