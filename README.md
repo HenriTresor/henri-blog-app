@@ -139,11 +139,11 @@ All endpoints have the root `/api/v1`.
      - Connect to PostgreSQL using `psql` or a GUI tool like pgAdmin.
      - Create a new database:
        ```sql
-       CREATE DATABASE blog_platform;
+       CREATE DATABASE qtglobal;
        ```
      - Update the Prisma configuration (`/server/prisma/.env`) with your database connection details:
        ```env
-       DATABASE_URL="postgresql://username:password@localhost:5432/blog_platform"
+       DATABASE_URL="postgresql://username:password@localhost:5432/qtglobal"
        ```
    - Set up Prisma and migrate the database:
      ```bash
