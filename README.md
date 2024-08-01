@@ -21,6 +21,36 @@ This project is a blog platform that includes user authentication, blog post man
 
 This project implements a blog platform where users can register, log in, manage blog posts, and interact with comments. The backend uses Node.js, Prisma, and PostgreSQL. The frontend is built with React.js.
 
+
+## Project Structure
+
+### Backend
+
+- **`/server`**: Contains the backend code.
+  - **`/src`**: Source code directory.
+    - **`/controllers`**: Contains request handlers for the API endpoints.
+    - **`/prisma`**: Contains Prisma schema definitions and database models.
+    - **`/routers`**: Defines API routes and connects them to controllers.
+    - **`/middlewares`**: Contains middleware functions, such as authentication checks.
+    - **`/services`**: Functions for making API requests to the database.
+    - **`/config`**: contains configuration files.
+    - **`/validators`**: contains validations.
+    - **`/utils`**: Utility functions and helpers.
+  - **`/prisma`**: Contains Prisma configuration files and migration scripts.
+  - **`__init__.js`**: Entry point for the backend application. Sets up the Express server and middleware.
+
+### Frontend
+
+- **`/frontend`**: Contains the frontend code.
+  - **`/src`**: Source code directory.
+    - **`/components`**: React components for the user interface.
+    - **`/pages`**: React components for different pages of the application.
+    - **`/utils`**: Utility functions and helpers.
+    - **`/providers`**: Contains React context providers for state management.
+    - **`/styles`**: CSS and styling files.
+  - **`index.js`**: Entry point for the React application. Renders the main application component.
+
+
 ## Backend Setup
 
 ### User Authentication
