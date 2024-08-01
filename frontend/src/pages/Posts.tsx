@@ -33,6 +33,11 @@ function Posts() {
 
                 <div className="w-full flex flex-col gap-5">
                     {
+                        !posts.length && (
+                            <p className="text-center p-5 text-[1.2rem]">There are no available posts. Create One!</p>
+                        )
+                    }
+                    {
                         loading && (
                             <Loader />
                         )

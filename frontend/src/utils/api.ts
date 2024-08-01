@@ -23,6 +23,15 @@ const api = {
                 },
                 body: JSON.stringify(payload),
             });
+        }, DELETE: async (path: string) => {
+            const token = localStorage.getItem('token');
+            return fetch(`${BASE_URL}${path}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
         },
         GET: async (path: string) => {
             const token = localStorage.getItem('token');
